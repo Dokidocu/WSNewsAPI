@@ -26,7 +26,7 @@ open class WSNewsAPI {
      - parameter sortBy: (query)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func everythingGet(page: Int, pageSize: Int, q: String? = nil, qInTitle: String? = nil, sources: String? = nil, domains: String? = nil, excludeDomains: String? = nil, from: Date? = nil, to: Date? = nil, language: WSNewsLanguage? = nil, sortBy: WSNewsSortBy? = nil, completion: @escaping ((_ data: [WSNewsTopHeadlineResponse]?,_ error: Error?) -> Void)) {
+    open class func everythingGet(page: Int, pageSize: Int, q: String? = nil, qInTitle: String? = nil, sources: String? = nil, domains: String? = nil, excludeDomains: String? = nil, from: Date? = nil, to: Date? = nil, language: WSNewsLanguage? = nil, sortBy: WSNewsSortBy? = nil, completion: @escaping ((_ data: WSNewsTopHeadlineResponse?,_ error: Error?) -> Void)) {
         everythingGetWithRequestBuilder(page: page, pageSize: pageSize, q: q, qInTitle: qInTitle, sources: sources, domains: domains, excludeDomains: excludeDomains, from: from, to: to, language: language, sortBy: sortBy).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
@@ -40,13 +40,13 @@ open class WSNewsAPI {
      - :
        - type: http
        - name: bearerAuth
-     - examples: [{contentType=application/json, example=[ {
+     - examples: [{contentType=application/json, example={
   "totalResults" : 0,
   "articles" : [ {
     "publishedAt" : "publishedAt",
     "author" : "author",
     "urlToImage" : "http://example.com/aeiou",
-    "descrption" : "descrption",
+    "description" : "description",
     "source" : {
       "country" : "ae",
       "name" : "name",
@@ -63,7 +63,7 @@ open class WSNewsAPI {
     "publishedAt" : "publishedAt",
     "author" : "author",
     "urlToImage" : "http://example.com/aeiou",
-    "descrption" : "descrption",
+    "description" : "description",
     "source" : {
       "country" : "ae",
       "name" : "name",
@@ -78,45 +78,7 @@ open class WSNewsAPI {
     "content" : "content"
   } ],
   "status" : "status"
-}, {
-  "totalResults" : 0,
-  "articles" : [ {
-    "publishedAt" : "publishedAt",
-    "author" : "author",
-    "urlToImage" : "http://example.com/aeiou",
-    "descrption" : "descrption",
-    "source" : {
-      "country" : "ae",
-      "name" : "name",
-      "description" : "description",
-      "language" : "ar",
-      "id" : "id",
-      "category" : "business",
-      "url" : "http://example.com/aeiou"
-    },
-    "title" : "title",
-    "url" : "http://example.com/aeiou",
-    "content" : "content"
-  }, {
-    "publishedAt" : "publishedAt",
-    "author" : "author",
-    "urlToImage" : "http://example.com/aeiou",
-    "descrption" : "descrption",
-    "source" : {
-      "country" : "ae",
-      "name" : "name",
-      "description" : "description",
-      "language" : "ar",
-      "id" : "id",
-      "category" : "business",
-      "url" : "http://example.com/aeiou"
-    },
-    "title" : "title",
-    "url" : "http://example.com/aeiou",
-    "content" : "content"
-  } ],
-  "status" : "status"
-} ]}]
+}}]
      - parameter page: (query)  
      - parameter pageSize: (query)  
      - parameter q: (query)  (optional)
@@ -129,9 +91,9 @@ open class WSNewsAPI {
      - parameter language: (query)  (optional)
      - parameter sortBy: (query)  (optional)
 
-     - returns: RequestBuilder<[WSNewsTopHeadlineResponse]> 
+     - returns: RequestBuilder<WSNewsTopHeadlineResponse> 
      */
-    open class func everythingGetWithRequestBuilder(page: Int, pageSize: Int, q: String? = nil, qInTitle: String? = nil, sources: String? = nil, domains: String? = nil, excludeDomains: String? = nil, from: Date? = nil, to: Date? = nil, language: WSNewsLanguage? = nil, sortBy: WSNewsSortBy? = nil) -> RequestBuilder<[WSNewsTopHeadlineResponse]> {
+    open class func everythingGetWithRequestBuilder(page: Int, pageSize: Int, q: String? = nil, qInTitle: String? = nil, sources: String? = nil, domains: String? = nil, excludeDomains: String? = nil, from: Date? = nil, to: Date? = nil, language: WSNewsLanguage? = nil, sortBy: WSNewsSortBy? = nil) -> RequestBuilder<WSNewsTopHeadlineResponse> {
         let path = "/everything"
         let URLString = WSNewsSwaggerClientAPI.basePath + path
         let parameters: [String:Any]? = nil
@@ -151,7 +113,7 @@ open class WSNewsAPI {
         ])
 
 
-        let requestBuilder: RequestBuilder<[WSNewsTopHeadlineResponse]>.Type = WSNewsSwaggerClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<WSNewsTopHeadlineResponse>.Type = WSNewsSwaggerClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -250,7 +212,7 @@ open class WSNewsAPI {
     "publishedAt" : "publishedAt",
     "author" : "author",
     "urlToImage" : "http://example.com/aeiou",
-    "descrption" : "descrption",
+    "description" : "description",
     "source" : {
       "country" : "ae",
       "name" : "name",
@@ -267,7 +229,7 @@ open class WSNewsAPI {
     "publishedAt" : "publishedAt",
     "author" : "author",
     "urlToImage" : "http://example.com/aeiou",
-    "descrption" : "descrption",
+    "description" : "description",
     "source" : {
       "country" : "ae",
       "name" : "name",

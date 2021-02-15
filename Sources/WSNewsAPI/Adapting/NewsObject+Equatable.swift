@@ -21,7 +21,7 @@ extension WSNewsArticle: Equatable {
         return lhs.source == rhs.source &&
             lhs.url == rhs.url &&
             lhs.author == rhs.author &&
-            lhs.description == rhs.description &&
+            lhs._description == rhs._description &&
             lhs.title == rhs.title
     }
 }

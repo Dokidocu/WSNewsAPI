@@ -14,22 +14,32 @@ public struct WSNewsArticle: Codable {
     public var source: WSNewsSource?
     public var author: String?
     public var title: String?
-    public var description: String?
+    public var _description: String?
     public var url: String?
     public var urlToImage: String?
     public var publishedAt: String?
     public var content: String?
 
-    public init(source: WSNewsSource? = nil, author: String? = nil, title: String? = nil, descrption: String? = nil, url: String? = nil, urlToImage: String? = nil, publishedAt: String? = nil, content: String? = nil) {
+    public init(source: WSNewsSource? = nil, author: String? = nil, title: String? = nil, _description: String? = nil, url: String? = nil, urlToImage: String? = nil, publishedAt: String? = nil, content: String? = nil) {
         self.source = source
         self.author = author
         self.title = title
-        self.description = descrption
+        self._description = _description
         self.url = url
         self.urlToImage = urlToImage
         self.publishedAt = publishedAt
         self.content = content
     }
 
+    public enum CodingKeys: String, CodingKey { 
+        case source
+        case author
+        case title
+        case _description = "description"
+        case url
+        case urlToImage
+        case publishedAt
+        case content
+    }
 
 }

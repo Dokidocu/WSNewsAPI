@@ -19,10 +19,9 @@ final class WSNewsAPIHeadlinesTests: XCTestCase {
                                   pageSize: nil)
         { (response, error) in
             guard let errorResponse = error as? ErrorResponse else { return }
-            guard case ErrorResponse.error(let statusCode, _, let error) = errorResponse else { return }
+            guard case ErrorResponse.error(let statusCode, _, _) = errorResponse else { return }
 
             XCTAssertEqual(400, statusCode, "Expecting error 400")
-            print(error.localizedDescription)
             expect.fulfill()
         }
 

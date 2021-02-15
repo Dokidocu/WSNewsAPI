@@ -10,28 +10,64 @@ final class WSNewsAPIArticlesTests: XCTestCase {
 
 
     func testGetArticlesInvalidRequest() {
-        let expect = expectation(description: "Received valid data")
+        let expect = expectation(description: "Invalid parameters / Bad request")
 
-        WSNewsAPI.everythingGet(page: 1, pageSize: 20) { (<#[WSNewsTopHeadlineResponse]?#>, <#Error?#>) in
-            <#code#>
+        WSNewsAPI.everythingGet(page: 1, pageSize: 20)
+        { (response, error) in
+            guard let errorResponse = error as? ErrorResponse else { return }
+            guard case ErrorResponse.error(let statusCode, _, _) = errorResponse else { return }
+
+            XCTAssertEqual(400, statusCode, "Expecting error 400")
+            expect.fulfill()
         }
 
-        WSNewsAPI.everythingGet(page: 0,
+        wait(for: [expect], timeout: WSNewsAPITests.defaultTimeOut)
+    }
+
+    func testGetArticlesForQ() {
+        let expect = expectation(description: "Received valid data")
+
+        WSNewsAPI.everythingGet(page: 1,
                                 pageSize: 20,
-                                q: nil,
+                                q: "finance",
                                 qInTitle: nil,
-                                sources: "the-washington-post",
+                                sources: nil,
                                 domains: nil,
                                 excludeDomains: nil,
                                 from: nil,
                                 to: nil,
-                                language: .en,
+                                language: nil,
                                 sortBy: nil)
         { (response, error) in
             guard nil == error else { return }
-            guard let topHeadlineResponse = response else { return }
+            guard let articles = response?.articles else { return }
 
-            XCTAssertTrue(topHeadlineResponse.count > 0, "Should not return an empty list")
+            XCTAssertTrue(articles.count > 0, "Should not return an empty list")
+            expect.fulfill()
+        }
+
+        wait(for: [expect], timeout: WSNewsAPITests.defaultTimeOut)
+    }
+
+    func testGetArticlesForQInTitle() {
+        let expect = expectation(description: "Received valid data")
+
+        WSNewsAPI.everythingGet(page: 1,
+                                pageSize: 20,
+                                q: nil,
+                                qInTitle: "finance",
+                                sources: nil,
+                                domains: nil,
+                                excludeDomains: nil,
+                                from: nil,
+                                to: nil,
+                                language: nil,
+                                sortBy: nil)
+        { (response, error) in
+            guard nil == error else { return }
+            guard let articles = response?.articles else { return }
+
+            XCTAssertTrue(articles.count > 0, "Should not return an empty list")
             expect.fulfill()
         }
 
@@ -54,173 +90,72 @@ final class WSNewsAPIArticlesTests: XCTestCase {
                                 sortBy: nil)
         { (response, error) in
             guard nil == error else { return }
-            guard let topHeadlineResponse = response else { return }
+            guard let articles = response?.articles else { return }
 
-            XCTAssertTrue(topHeadlineResponse.count > 0, "Should not return an empty list")
+            XCTAssertTrue(articles.count > 0, "Should not return an empty list")
             expect.fulfill()
         }
 
         wait(for: [expect], timeout: WSNewsAPITests.defaultTimeOut)
     }
 
-    func testGetHeadlinesInvalidRequest() {
-        let expect = expectation(description: "Invalid parameters / Bad request")
-
-        WSNewsAPI.topHeadlinesGet(q: nil,
-                                  sources: nil,
-                                  country: nil,
-                                  category: nil,
-                                  page: nil,
-                                  pageSize: nil)
-        { (response, error) in
-            guard let errorResponse = error as? ErrorResponse else { return }
-            guard case ErrorResponse.error(let statusCode, _, let error) = errorResponse else { return }
-
-            XCTAssertEqual(400, statusCode, "Expecting error 400")
-            print(error.localizedDescription)
-            expect.fulfill()
-        }
-
-        wait(for: [expect], timeout: WSNewsAPITests.defaultTimeOut)
-    }
-
-    func testGetHeadlinesForUSACountry() {
+    func testGetArticlesDomains() {
         let expect = expectation(description: "Received valid data")
 
-        WSNewsAPI.topHeadlinesGet(q: nil,
-                                  sources: nil,
-                                  country: .us,
-                                  category: nil,
-                                  page: nil,
-                                  pageSize: nil)
+        WSNewsAPI.everythingGet(page: 1,
+                                pageSize: 20,
+                                q: nil,
+                                qInTitle: nil,
+                                sources: nil,
+                                domains: "bbc.co.uk, techcrunch.com",
+                                excludeDomains: nil,
+                                from: nil,
+                                to: nil,
+                                language: nil,
+                                sortBy: nil)
         { (response, error) in
             guard nil == error else { return }
             guard let articles = response?.articles else { return }
 
-            XCTAssertTrue(articles.count > 0, "Should return a list of articles for USA")
+            XCTAssertTrue(articles.count > 0, "Should not return an empty list")
             expect.fulfill()
         }
 
         wait(for: [expect], timeout: WSNewsAPITests.defaultTimeOut)
     }
 
-    func testGetHeadlinesForQ() {
+    func testGetArticlesExcludedDomains() {
         let expect = expectation(description: "Received valid data")
 
-        WSNewsAPI.topHeadlinesGet(q: "economic",
-                                  sources: nil,
-                                  country: nil,
-                                  category: nil,
-                                  page: nil,
-                                  pageSize: nil)
+        WSNewsAPI.everythingGet(page: 1,
+                                pageSize: 20,
+                                q: nil,
+                                qInTitle: nil,
+                                sources: nil,
+                                domains: "thenextweb.com",
+                                excludeDomains: "bbc.co.uk,techcrunch.com",
+                                from: nil,
+                                to: nil,
+                                language: nil,
+                                sortBy: nil)
         { (response, error) in
             guard nil == error else { return }
             guard let articles = response?.articles else { return }
 
-            XCTAssertTrue(articles.count > 0, "Should return a list of articles for USA")
+            XCTAssertTrue(articles.count > 0, "Should not return an empty list")
             expect.fulfill()
         }
 
         wait(for: [expect], timeout: WSNewsAPITests.defaultTimeOut)
-    }
-
-    func testGetHeadlinesForSource() {
-        let expect = expectation(description: "Received valid data")
-
-        WSNewsAPI.topHeadlinesGet(q: nil,
-                                  sources: "the-washington-post",
-                                  country: nil,
-                                  category: nil,
-                                  page: nil,
-                                  pageSize: nil)
-        { (response, error) in
-            guard nil == error else { return }
-            guard let articles = response?.articles else { return }
-
-            XCTAssertTrue(articles.count > 0, "Should return a list of articles for USA")
-            expect.fulfill()
-        }
-
-        wait(for: [expect], timeout: WSNewsAPITests.defaultTimeOut)
-    }
-
-    func testGetHeadlinesForCategorySport() {
-        let expect = expectation(description: "Received valid data")
-
-        WSNewsAPI.topHeadlinesGet(q: nil,
-                                  sources: nil,
-                                  country: nil,
-                                  category: .sports,
-                                  page: nil,
-                                  pageSize: nil)
-        { (response, error) in
-            guard nil == error else { return }
-            guard let articles = response?.articles else { return }
-
-            XCTAssertTrue(articles.count > 0, "Should return a list of articles for USA")
-            expect.fulfill()
-        }
-
-        wait(for: [expect], timeout: WSNewsAPITests.defaultTimeOut)
-    }
-
-    func testGetHeadlinesPages() {
-        let expect = expectation(description: "Received valid data for page 1")
-        let expectSecondPage = expectation(description: "Received valid data for page 2")
-
-        let country = WSNewsCountry.us
-        let category = WSNewsCategory.business
-        let pageSize = 10
-        var currentPage = 1
-
-        WSNewsAPI.topHeadlinesGet(q: nil,
-                                  sources: nil,
-                                  country: country,
-                                  category: category,
-                                  page: currentPage,
-                                  pageSize: pageSize)
-        { (response, error) in
-            guard nil == error else { return }
-            guard let articles = response?.articles else { return }
-
-            XCTAssertEqual(10, articles.count, "Should return a list of 10 articles")
-            XCTAssertTrue(articles.count > 0, "Should return a list of articles for USA")
-
-            currentPage += 1
-
-            WSNewsAPI.topHeadlinesGet(q: nil,
-                                      sources: nil,
-                                      country: country,
-                                      category: category,
-                                      page: currentPage,
-                                      pageSize: 10)
-            { (response, error) in
-                guard nil == error else { return }
-                guard let articles2 = response?.articles else { return }
-                var doublon = false
-                articles.forEach { (article) in
-                    if doublon { return }
-                    doublon = articles2.contains(where: { $0 == article })
-                }
-
-                XCTAssertEqual(10, articles2.count, "Should return a list of 10 articles")
-                XCTAssertFalse(doublon, "Should not have a doublon due to different page")
-
-                expectSecondPage.fulfill()
-            }
-
-            expect.fulfill()
-        }
-
-        wait(for: [expect, expectSecondPage], timeout: WSNewsAPITests.defaultTimeOut)
     }
 
     static var allTests = [
-        ("testGetHeadlinesInvalidRequest", testGetHeadlinesInvalidRequest),
-        ("testGetHeadlinesForUSACountry", testGetHeadlinesForUSACountry),
-        ("testGetHeadlinesForSource", testGetHeadlinesForSource),
-        ("testGetHeadlinesForCategorySport", testGetHeadlinesForCategorySport),
-        ("testGetHeadlinesPages", testGetHeadlinesPages)
+        ("testGetArticlesInvalidRequest", testGetArticlesInvalidRequest),
+        ("testGetArticlesForQ", testGetArticlesForQ),
+        ("testGetArticlesForQInTitle", testGetArticlesForQInTitle),
+        ("testGetArticlesDomains", testGetArticlesDomains),
+        ("testGetArticlesExcludedDomains", testGetArticlesExcludedDomains),
+        ("testGetArticlesForSources", testGetArticlesForSources)
     ]
 }
 
