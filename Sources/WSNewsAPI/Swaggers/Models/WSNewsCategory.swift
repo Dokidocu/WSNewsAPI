@@ -8,6 +8,7 @@
 import Foundation
 
 
+/** Find sources that display news of this category. Default: all categories. */
 public enum WSNewsCategory: String, Codable {
     case business = "business"
     case entertainment = "entertainment"

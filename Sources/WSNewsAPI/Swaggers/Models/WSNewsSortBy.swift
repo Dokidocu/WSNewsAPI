@@ -8,6 +8,7 @@
 import Foundation
 
 
+/** The order to sort the articles in. Possible options: relevancy, popularity, publishedAt. */
 public enum WSNewsSortBy: String, Codable {
     case relevancy = "relevancy"
     case popularity = "popularity"

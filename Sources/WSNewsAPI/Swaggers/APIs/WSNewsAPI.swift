@@ -13,15 +13,15 @@ open class WSNewsAPI {
     /**
      Returns articles
 
-     - parameter page: (query)  
-     - parameter pageSize: (query)  
-     - parameter q: (query)  (optional)
-     - parameter qInTitle: (query)  (optional)
-     - parameter sources: (query)  (optional)
-     - parameter domains: (query)  (optional)
-     - parameter excludeDomains: (query)  (optional)
-     - parameter from: (query)  (optional)
-     - parameter to: (query)  (optional)
+     - parameter page: (query) Use this to page through the results. 
+     - parameter pageSize: (query) The number of results to return per page. 20 is the default, 100 is the maximum. 
+     - parameter q: (query) Keywords or phrases to search for in the article title and body. The complete value for q must be URL-encoded. Advanced search is supported here: See: https://newsapi.org/docs/endpoints/everything (optional)
+     - parameter qInTitle: (query) Keywords or phrases to search for in the article title only. The complete value for qInTitle must be URL-encoded. Advanced search is supported here: See: https://newsapi.org/docs/endpoints/everything (optional)
+     - parameter sources: (query) A comma-seperated string of identifiers (maximum 20) for the news sources or blogs you want headlines from. Use the /sources endpoint to locate these programmatically or look at the sources index. (optional)
+     - parameter domains: (query) A comma-seperated string of domains (eg bbc.co.uk, techcrunch.com, engadget.com) to restrict the search to. (optional)
+     - parameter excludeDomains: (query) A comma-seperated string of domains (eg bbc.co.uk, techcrunch.com, engadget.com) to remove from the results. (optional)
+     - parameter from: (query) A date and optional time for the oldest article allowed. This should be in ISO 8601 format (e.g. 2021-02-15 or 2021-02-15T19:07:40) Default: the oldest according to your plan. (optional)
+     - parameter to: (query) A date and optional time for the newest article allowed. This should be in ISO 8601 format (e.g. 2021-02-15 or 2021-02-15T19:07:40) Default: the newest according to your plan. (optional)
      - parameter language: (query)  (optional)
      - parameter sortBy: (query)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
@@ -79,15 +79,15 @@ open class WSNewsAPI {
   } ],
   "status" : "status"
 }}]
-     - parameter page: (query)  
-     - parameter pageSize: (query)  
-     - parameter q: (query)  (optional)
-     - parameter qInTitle: (query)  (optional)
-     - parameter sources: (query)  (optional)
-     - parameter domains: (query)  (optional)
-     - parameter excludeDomains: (query)  (optional)
-     - parameter from: (query)  (optional)
-     - parameter to: (query)  (optional)
+     - parameter page: (query) Use this to page through the results. 
+     - parameter pageSize: (query) The number of results to return per page. 20 is the default, 100 is the maximum. 
+     - parameter q: (query) Keywords or phrases to search for in the article title and body. The complete value for q must be URL-encoded. Advanced search is supported here: See: https://newsapi.org/docs/endpoints/everything (optional)
+     - parameter qInTitle: (query) Keywords or phrases to search for in the article title only. The complete value for qInTitle must be URL-encoded. Advanced search is supported here: See: https://newsapi.org/docs/endpoints/everything (optional)
+     - parameter sources: (query) A comma-seperated string of identifiers (maximum 20) for the news sources or blogs you want headlines from. Use the /sources endpoint to locate these programmatically or look at the sources index. (optional)
+     - parameter domains: (query) A comma-seperated string of domains (eg bbc.co.uk, techcrunch.com, engadget.com) to restrict the search to. (optional)
+     - parameter excludeDomains: (query) A comma-seperated string of domains (eg bbc.co.uk, techcrunch.com, engadget.com) to remove from the results. (optional)
+     - parameter from: (query) A date and optional time for the oldest article allowed. This should be in ISO 8601 format (e.g. 2021-02-15 or 2021-02-15T19:07:40) Default: the oldest according to your plan. (optional)
+     - parameter to: (query) A date and optional time for the newest article allowed. This should be in ISO 8601 format (e.g. 2021-02-15 or 2021-02-15T19:07:40) Default: the newest according to your plan. (optional)
      - parameter language: (query)  (optional)
      - parameter sortBy: (query)  (optional)
 
@@ -184,12 +184,12 @@ open class WSNewsAPI {
     /**
      Returns a list of headlines
 
-     - parameter q: (query)  (optional)
-     - parameter sources: (query)  (optional)
+     - parameter q: (query) Keywords or a phrase to search for. (optional)
+     - parameter sources: (query) A comma-seperated string of identifiers for the news sources or blogs you want headlines from. Use the /sources endpoint to locate these programmatically or look at the sources index. Note: you can&#x27;t mix this param with the country or category params. (optional)
      - parameter country: (query)  (optional)
      - parameter category: (query)  (optional)
-     - parameter page: (query)  (optional)
-     - parameter pageSize: (query)  (optional, default to 20)
+     - parameter page: (query) Use this to page through the results if the total results found is greater than the page size. (optional)
+     - parameter pageSize: (query) The number of results to return per page (request). 20 is the default, 100 is the maximum. (optional, default to 20)
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func topHeadlinesGet(q: String? = nil, sources: String? = nil, country: WSNewsCountry? = nil, category: WSNewsCategory? = nil, page: Int? = nil, pageSize: Int? = nil, completion: @escaping ((_ data: WSNewsTopHeadlineResponse?,_ error: Error?) -> Void)) {
@@ -245,12 +245,12 @@ open class WSNewsAPI {
   } ],
   "status" : "status"
 }}]
-     - parameter q: (query)  (optional)
-     - parameter sources: (query)  (optional)
+     - parameter q: (query) Keywords or a phrase to search for. (optional)
+     - parameter sources: (query) A comma-seperated string of identifiers for the news sources or blogs you want headlines from. Use the /sources endpoint to locate these programmatically or look at the sources index. Note: you can&#x27;t mix this param with the country or category params. (optional)
      - parameter country: (query)  (optional)
      - parameter category: (query)  (optional)
-     - parameter page: (query)  (optional)
-     - parameter pageSize: (query)  (optional, default to 20)
+     - parameter page: (query) Use this to page through the results if the total results found is greater than the page size. (optional)
+     - parameter pageSize: (query) The number of results to return per page (request). 20 is the default, 100 is the maximum. (optional, default to 20)
 
      - returns: RequestBuilder<WSNewsTopHeadlineResponse> 
      */

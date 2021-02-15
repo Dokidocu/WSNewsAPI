@@ -8,6 +8,7 @@
 import Foundation
 
 
+/** Find sources that display news in a specific language. Possible options: ar de en es fr he it nl no pt ru se ud zh .Default: all languages. */
 public enum WSNewsLanguage: String, Codable {
     case ar = "ar"
     case de = "de"

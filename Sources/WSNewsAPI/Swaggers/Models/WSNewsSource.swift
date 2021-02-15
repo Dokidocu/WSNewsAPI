@@ -11,9 +11,13 @@ import Foundation
 
 public struct WSNewsSource: Codable {
 
+    /** The identifier of the news source. You can use this with our other endpoints. */
     public var _id: String?
+    /** The name of the news source */
     public var name: String?
+    /** A description of the news source */
     public var _description: String?
+    /** The URL of the homepage. */
     public var url: String?
     public var category: WSNewsCategory?
     public var language: WSNewsLanguage?

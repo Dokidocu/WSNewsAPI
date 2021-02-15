@@ -11,7 +11,9 @@ import Foundation
 
 public struct WSNewsSourcesResponse: Codable {
 
+    /** If the request was successful or not. Options: ok, error. In the case of ok, the below two properties will not be present. */
     public var status: String?
+    /** The results of the request. */
     public var sources: [WSNewsSource]?
 
     public init(status: String? = nil, sources: [WSNewsSource]? = nil) {

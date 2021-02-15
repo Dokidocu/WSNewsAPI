@@ -11,8 +11,11 @@ import Foundation
 
 public struct WSNewsTopHeadlineResponse: Codable {
 
+    /** If the request was successful or not. Options: ok, error. In the case of error a code and message property will be populated. */
     public var status: String?
+    /** The total number of results available for your request. Only a limited number are shown at a time though, so use the page parameter in your requests to page through them. */
     public var totalResults: Int?
+    /** The results of the request. */
     public var articles: [WSNewsArticle]?
 
     public init(status: String? = nil, totalResults: Int? = nil, articles: [WSNewsArticle]? = nil) {

@@ -8,6 +8,7 @@
 import Foundation
 
 
+/** Find sources that display news in a specific country. Default: all countries. */
 public enum WSNewsCountry: String, Codable {
     case ae = "ae"
     case ar = "ar"
