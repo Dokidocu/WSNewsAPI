@@ -6,6 +6,7 @@ iOS Client for newsapi.org for **v2**
 
 | Version | Date       | Details                                                |
 | ------- | ---------- | ------------------------------------------------------ |
+| 2.0.1   | 16.02.2021 | Add commands for next page                             |
 | 2.0.0   | 15.02.2021 | First iOS version for newsapi.org by using Swagger 3.0 |
 
 ## Dependencies
@@ -22,7 +23,14 @@ iOS Client for newsapi.org for **v2**
 
 WSNewsSwaggerClientAPI.customHeaders = ["Authorization": "Bearer \($clientAPIKey$)"]
 
-2. Use WSNewsAPI class to make the call to the corresponding endpoints:
-   1. sourcesGet(...)
-   2. topHeadlinesGet(...)
-   3. everythingGet(...)
+## What to use
+
+### 1. WSNewsAPI
+
+1. sourcesGet(...)
+2. topHeadlinesGet(...)
+3. everythingGet(...)
+
+### 2. WSNewsArticlesCommand / WSNewsHeadlineCommand
+
+It returns next request when dealing with page

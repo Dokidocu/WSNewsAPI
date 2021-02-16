@@ -6,7 +6,9 @@ public func allTests() -> [XCTestCaseEntry] {
         testCase(WSNewsAPITests.allTests),
         testCase(WSNewsAPISourcesTests.allTests),
         testCase(WSNewsAPIHeadlinesTests.allTests),
-        testCase(WSNewsAPIArticlesTests.allTests)
+        testCase(WSNewsAPIArticlesTests.allTests),
+        testCase(WSNewsArticlesCommandTests.allTests),
+        testCase(WSNewsHeadlineCommandTests.allTests)
     ]
 }
 #endif
